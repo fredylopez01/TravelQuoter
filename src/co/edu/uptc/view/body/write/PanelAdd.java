@@ -12,7 +12,7 @@ public class PanelAdd extends JPanel {
 	private PanelCarAdd cars;
 	private PanelMessAdd messes;
 	private PanelActivityAdd activities;
-//	private PanelPackage packages;
+	private PanelPackageAdd packages;
 
 	public PanelAdd(ActionListener listener) {
 		setLayout(new CardLayout(0, 0));
@@ -31,9 +31,9 @@ public class PanelAdd extends JPanel {
 		
 		activities = new PanelActivityAdd(listener);
 		add(activities, "activitiesAdd");
-//		
-//		packages = new PanelPackage(listener);
-//		add(packages, "packagesAdd");
+		
+		packages = new PanelPackageAdd(listener);
+		add(packages, "packagesAdd");
 	}
 	
 
@@ -76,13 +76,13 @@ public class PanelAdd extends JPanel {
 	public void setActivities(PanelActivityAdd activities) {
 		this.activities = activities;
 	}
-//
-//	public PanelPackage getPackages() {
-//		return packages;
-//	}
-//
-//	public void setPackages(PanelPackage packages) {
-//		this.packages = packages;
-//	}
+
+	public PanelPackageAdd getPackages() {
+		return packages;
+	}
+
+	public void setPackages(PanelPackageAdd packages) {
+		this.packages = packages;
+	}
 	
 }

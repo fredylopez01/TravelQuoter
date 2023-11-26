@@ -1,9 +1,9 @@
 package co.edu.uptc.model;
 
 public abstract class Service {
-	double cost;
-	String place;
-	String type;
+	private double cost;
+	private String place;
+	private String type;
 	
 	public Service(double cost, String place, String type) {
 		super();

@@ -15,12 +15,14 @@ import co.edu.uptc.view.header.ShapedButtonProfile;
 
 public class OptionsAdmin extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private ImageIcon iconView;
-	private JButton btnView;
+	private ImageIcon iconAdd;
+	private JButton btnAdd;
 	private ImageIcon iconEdit;
 	private JButton btnEdit;
 	private ImageIcon iconDelete;
 	private JButton btnDelete;
+	private ImageIcon iconAddService;
+	private JButton btnAddService;
 	
 	public OptionsAdmin(ActionListener listener) {
 		initComponents(listener);
@@ -44,12 +46,20 @@ public class OptionsAdmin extends JPanel {
 		gbc.gridx = 1;
 		add(btnDelete, gbc);
 		
-		iconView = new ImageIcon(getClass().getResource("/co/edu/uptc/view/images/body/agregar.png"));
-		btnView = new JButton("Agregar");
-		btnView.setActionCommand("addService");
-		styleBtn(btnView, listener, iconView, Constants.GREEN);
+		iconAdd = new ImageIcon(getClass().getResource("/co/edu/uptc/view/images/body/agregar.png"));
+		btnAdd = new JButton("Nuevo");
+		btnAdd.setActionCommand("addService");
+		styleBtn(btnAdd, listener, iconAdd, Constants.GREEN);
 		gbc.gridx = 2;
-		add(btnView, gbc);
+		add(btnAdd, gbc);
+		
+		iconAddService = new ImageIcon(getClass().getResource("/co/edu/uptc/view/images/body/listo.png"));
+		btnAddService = new JButton("Agregar al Paquete");
+		btnAddService.setActionCommand("addServicePackage");
+		styleBtn(btnAddService, listener, iconAddService, Constants.GREEN);
+		gbc.gridy = 1;
+		add(btnAddService, gbc);
+		btnAddService.setVisible(false);
 	}
 	
 	public void styleBtn(JButton btn, ActionListener listener, ImageIcon icon, Color color) {
@@ -62,4 +72,27 @@ public class OptionsAdmin extends JPanel {
 		btn.setMargin(new Insets(5, 20, 5, 20));
 		btn.setUI(new ShapedButtonProfile(Constants.COLORBACKGROUNDHEADER));
 	}
+	
+	public void btnAddService() {
+		btnEdit.setVisible(false);
+		btnDelete.setVisible(false);
+		btnAdd.setVisible(false);
+		btnAddService.setVisible(true);
+	}
+	
+	public void btnAddServiceNo() {
+		btnEdit.setVisible(true);
+		btnDelete.setVisible(true);
+		btnAdd.setVisible(true);
+		btnAddService.setVisible(false);
+	}
+
+	public JButton getBtnAddService() {
+		return btnAddService;
+	}
+
+	public void setBtnAddService(JButton btnAddService) {
+		this.btnAddService = btnAddService;
+	}
+	
 }

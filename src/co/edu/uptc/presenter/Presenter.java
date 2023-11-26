@@ -76,6 +76,12 @@ public class Presenter implements ActionListener, MouseListener, WindowListener 
 		case "addCar" -> addCar(false);
 		case "addMess" -> addMess(false);
 		case "addActivity" -> addAcitivity(false);
+		case "addFlightPackage" -> addFlightPackage();
+		case "addHousePackage" -> addHousePackage();
+		case "addCarPackage" -> addCarPackage();
+		case "addMessPackage" -> addMessPackage();
+		case "addActivityPackage" -> addActivityPackage();
+		case "addServicePackage" -> addServicePackage();
 		}
 	}
 	
@@ -112,25 +118,35 @@ public class Presenter implements ActionListener, MouseListener, WindowListener 
 	}
 	
 	public void openChangeProfile() {
-		viewTest.getPanelWindow().changeProfile(viewTest);
+		viewTest.getPanelWindow().changeProfile();
 	}
 	
 	public void userProfile() {
-		viewTest.getPanelWindow().panelUser();
-		viewTest.getPanelWindow().btnFligthSelect();
-		loadView();
-		changePanelCenter("fligths");
-		viewTest.getPanelWindow().closeChoseProfile(viewTest);
+		if(!viewTest.getPanelWindow().isUser()) {
+			viewTest.getPanelWindow().panelUser();
+			viewTest.getPanelWindow().btnFligthSelect();
+			loadView();
+			changePanelCenter("fligths");
+			viewTest.getPanelWindow().closeChoseProfile();
+		} else {
+			viewTest.getPanelWindow().message("Ya se encuentra en el panel de Usuario");
+			viewTest.getPanelWindow().closeChoseProfile();
+		}
 	}
 	
 	public void administratorProfile() {
-		viewTest.getPanelWindow().panelAdministrator();
-		viewTest.getPanelWindow().showDatesAdministrator(agencyTest.getFlights(), agencyTest.getHouses(), 
-				agencyTest.getCars(), agencyTest.getMesses(), agencyTest.getActivities(), 
-				agencyTest.getPackages(), this);
-		viewTest.getPanelWindow().btnFligthSelect();
-		changePanelCenter("fligths");
-		viewTest.getPanelWindow().closeChoseProfile(viewTest);
+		if(viewTest.getPanelWindow().isUser()) {
+			viewTest.getPanelWindow().panelAdministrator();
+			viewTest.getPanelWindow().showDatesAdministrator(agencyTest.getFlights(), agencyTest.getHouses(), 
+					agencyTest.getCars(), agencyTest.getMesses(), agencyTest.getActivities(), 
+					agencyTest.getPackages(), this);
+			viewTest.getPanelWindow().btnFligthSelect();
+			changePanelCenter("fligths");
+			viewTest.getPanelWindow().closeChoseProfile();
+		} else {
+			viewTest.getPanelWindow().message("Ya se está en el panel de Administrador");
+			viewTest.getPanelWindow().closeChoseProfile();
+		}
 	}
 	
 	public void verifyPassword() {
@@ -183,9 +199,12 @@ public class Presenter implements ActionListener, MouseListener, WindowListener 
 	
 	public void searchFlight() {
 		String[] dates = viewTest.getPanelWindow().datesSearchFlights(); 
-		if(!dates[0].equals("Seleccionar") && !dates[1].equals("Seleccionar") && !dates[1].equals("Seleccionar")) {
+		if(!dates[0].equals("Seleccionar") && !dates[1].equals("Seleccionar") && !dates[2].equals("Seleccionar")) {
 			ArrayList<Service> flights = agencyTest.searchService(Double.parseDouble(dates[3]), dates[1], "flight");
 			ArrayList<Flight> results = agencyTest.searchFlight(flights, dates[0], dates[2]);
+			viewTest.getPanelWindow().showResultsFlight(results);
+		} else if(!dates[0].equals("Seleccionar") && !dates[1].equals("Seleccionar")) {
+			ArrayList<Flight> results = agencyTest.searchFlightTwo(dates[0], dates[1]);
 			viewTest.getPanelWindow().showResultsFlight(results);
 		} else {
 			viewTest.getPanelWindow().message("Es necesario llenar todos los campos");
@@ -194,9 +213,12 @@ public class Presenter implements ActionListener, MouseListener, WindowListener 
 	
 	public void searchHouse() {
 		String[] dates = viewTest.getPanelWindow().datesSearchHouse();
-		if(!dates[3].equals("Seleccionar")) {
+		if(!dates[3].equals("Seleccionar") && Integer.valueOf(dates[0])!=0 && Integer.valueOf(dates[1])!=0) {
 			ArrayList<Service> houses = agencyTest.searchService(Double.parseDouble(dates[4]), dates[3], "houseRental");
 			ArrayList<HouseRental> results = agencyTest.searchHouseRental(houses, Integer.valueOf(dates[0]), Integer.valueOf(dates[1]), Integer.valueOf(dates[2]));
+			viewTest.getPanelWindow().showResultsHouse(results);
+		} else if(!dates[3].equals("Seleccionar") && Integer.valueOf(dates[0])!=0) {
+			ArrayList<HouseRental> results = agencyTest.searchHouseRental(Integer.valueOf(dates[0]), dates[3]);
 			viewTest.getPanelWindow().showResultsHouse(results);
 		} else {
 			viewTest.getPanelWindow().message("Es necesario llenar todos los campos");
@@ -209,16 +231,23 @@ public class Presenter implements ActionListener, MouseListener, WindowListener 
 			ArrayList<Service> cars = agencyTest.searchService(Double.parseDouble(dates[3]), dates[2], "carRental");
 			ArrayList<CarRental> results = agencyTest.searchCarRental(cars, dates[0], Integer.valueOf(dates[1]));
 			viewTest.getPanelWindow().showResultsCar(results);
-		} else {
+		} else if(!dates[0].equals("Seleccionar") && !dates[2].equals("Seleccionar")) {
+			ArrayList<CarRental> results = agencyTest.searchCarRental(dates[0], dates[2]);
+			viewTest.getPanelWindow().showResultsCar(results);
+		}
+		else {
 			viewTest.getPanelWindow().message("Es necesario llenar todos los campos");
 		}
 	}
 	
 	public void searchMess() {
 		String[] dates = viewTest.getPanelWindow().datesSearchMess();
-		if(!dates[0].equals("Seleccionar") && !dates[1].equals("Seleccionar")) {
+		if(!dates[0].equals("Seleccionar") && !dates[1].equals("Seleccionar") && Double.parseDouble(dates[2]) != 0) {
 			ArrayList<Service> messes = agencyTest.searchService(Double.parseDouble(dates[2]), dates[1], "mess");
 			ArrayList<Mess> results = agencyTest.searchMess(messes, Integer.valueOf(dates[3]), dates[0]);
+			viewTest.getPanelWindow().showResultsMess(results);
+		} else if(!dates[0].equals("Seleccionar") && !dates[1].equals("Seleccionar")) {
+			ArrayList<Mess> results = agencyTest.searchMess(dates[1], dates[0]);
 			viewTest.getPanelWindow().showResultsMess(results);
 		} else {
 			viewTest.getPanelWindow().message("Es necesario llenar todos los campos");
@@ -227,9 +256,12 @@ public class Presenter implements ActionListener, MouseListener, WindowListener 
 	
 	public void searchActivities() {
 		String[] dates = viewTest.getPanelWindow().datesSearchActivity();
-		if(!dates[0].equals("Seleccionar") && !dates[1].equals("Seleccionar")) {
+		if(!dates[0].equals("Seleccionar") && !dates[1].equals("Seleccionar") && Double.parseDouble(dates[2])!=0) {
 			ArrayList<Service> activities = agencyTest.searchService(Double.parseDouble(dates[2]), dates[1], "activity");
 			ArrayList<Activity> results = agencyTest.searchActivities(activities, dates[0]);
+			viewTest.getPanelWindow().showResultsActivity(results);
+		} else if(!dates[1].equals("Seleccionar")) {
+			ArrayList<Activity> results = agencyTest.searchActivities(dates[1]);
 			viewTest.getPanelWindow().showResultsActivity(results);
 		} else {
 			viewTest.getPanelWindow().message("Es necesario llenar todos los campos");
@@ -238,8 +270,12 @@ public class Presenter implements ActionListener, MouseListener, WindowListener 
 	
 	public void searchPackage() {
 		String[] dates = viewTest.getPanelWindow().datesSearchPackage();
-		if(!dates[1].equals("Seleccionar")) {
+		if(!dates[1].equals("Seleccionar") && Double.parseDouble(dates[2]) != 0) {
 			ArrayList<PackageService> results = agencyTest.searchPackage(Double.parseDouble(dates[2]), Integer.parseInt(dates[0]), dates[1]);
+			viewTest.getPanelWindow().showResultsPackage(results, this);
+			auxuliarNow.setNowPackages(results);
+		} else if(!dates[1].equals("Seleccionar")) {
+			ArrayList<PackageService> results = agencyTest.searchPackage(dates[1]);
 			viewTest.getPanelWindow().showResultsPackage(results, this);
 			auxuliarNow.setNowPackages(results);
 		} else {
@@ -256,7 +292,7 @@ public class Presenter implements ActionListener, MouseListener, WindowListener 
 		PackageService packageSelect;
 		if(viewTest.getPanelWindow().isUser()) {
 			packageSelected = viewTest.getPanelWindow().packageSelected();
-			packageSelect= auxuliarNow.getNowPackages().get(packageSelected);
+			packageSelect = auxuliarNow.getNowPackages().get(packageSelected);
 			viewTest.getPanelWindow().showPackage(packageSelect);
 		} else {
 			packageSelected = viewTest.getPanelWindow().packageSelectAdmin();
@@ -408,14 +444,21 @@ public class Presenter implements ActionListener, MouseListener, WindowListener 
 		}
 	}
 	
+	public void openEdditPackage() {
+		int serviceSelect = viewTest.getPanelWindow().packageSelectAdmin();
+		if(serviceSelect == -1) noSelect();
+		else {
+			viewTest.getPanelWindow().openPanelAdd("packages");
+		}
+	}
+	
 	public void noSelect() {
 		viewTest.getPanelWindow().message("Debe seleccionar un servicio");
 	}
 	
 	public void addService() {
 		String comand = auxuliarNow.getBtnSelectNow();
-		if(!comand.equals("packages")) viewTest.getPanelWindow().openPanelAdd(comand);
-		else viewTest.getPanelWindow().message("No disponible para esta sección");
+		viewTest.getPanelWindow().openPanelAdd(comand);
 	}
 	
 	public void addFlight(boolean isEdditing) {
@@ -502,6 +545,114 @@ public class Presenter implements ActionListener, MouseListener, WindowListener 
 		} else {
 			viewTest.getPanelWindow().message("Es necesario llenar todos los campos");
 		}
+	}
+	
+	public void addFlightPackage() {
+		viewTest.getPanelWindow().changePanelCenter("fligths");
+		viewTest.getPanelWindow().btnAddServicePackage();
+		auxuliarNow.setTypeServiceAdd("fligths");
+	}
+	
+	public void addHousePackage() {
+		viewTest.getPanelWindow().changePanelCenter("houses");
+		viewTest.getPanelWindow().btnAddServicePackage();
+		auxuliarNow.setTypeServiceAdd("houses");
+	}
+	
+	public void addCarPackage() {
+		viewTest.getPanelWindow().changePanelCenter("cars");
+		viewTest.getPanelWindow().btnAddServicePackage();
+		auxuliarNow.setTypeServiceAdd("cars");
+	}
+	
+	public void addMessPackage() {
+		viewTest.getPanelWindow().changePanelCenter("messes");
+		viewTest.getPanelWindow().btnAddServicePackage();
+		auxuliarNow.setTypeServiceAdd("messes");
+	}
+	
+	public void addActivityPackage() {
+		viewTest.getPanelWindow().changePanelCenter("activities");
+		viewTest.getPanelWindow().btnAddServicePackage();
+		auxuliarNow.setTypeServiceAdd("activities");
+	}
+	
+	public void addServicePackage() {
+		switch (auxuliarNow.getTypeServiceAdd()) {
+		case "fligths" -> addFlightPackageFinally();
+		case "houses" -> addHousePackageFinally();
+		case "cars" -> addCarPackageFinally();
+		case "messes" -> addMessPackageFinally();
+		case "activities" -> addActivityPackageFinally();
+		}
+	}
+	
+	public void addFlightPackageFinally() {
+		int serviceSelect = viewTest.getPanelWindow().flightSelectAdmin();
+		if(serviceSelect == -1) noSelect();
+		else {
+			Flight f = agencyTest.getFlights().get(serviceSelect);
+			PackageService newPackage = new PackageService();
+			newPackage.addService(f);
+			agencyTest.getPackages().add(newPackage);
+			finishCreate();
+		}
+	}
+	
+	public void addHousePackageFinally() {
+		int serviceSelect = viewTest.getPanelWindow().houseSelectAdmin();
+		if(serviceSelect == -1) noSelect();
+		else {
+			HouseRental h = agencyTest.getHouses().get(serviceSelect);
+			PackageService newPackage = new PackageService();
+			newPackage.addService(h);
+			agencyTest.getPackages().add(newPackage);
+			finishCreate();
+		}
+	}
+	
+	public void addCarPackageFinally() {
+		int serviceSelect = viewTest.getPanelWindow().carSelectAdmin();
+		if(serviceSelect == -1) noSelect();
+		else {
+			CarRental c = agencyTest.getCars().get(serviceSelect);
+			PackageService newPackage = new PackageService();
+			newPackage.addService(c);
+			agencyTest.getPackages().add(newPackage);
+			finishCreate();
+		}
+	}
+	
+	public void addMessPackageFinally() {
+		int serviceSelect = viewTest.getPanelWindow().messSelectAdmin();
+		if(serviceSelect == -1) noSelect();
+		else {
+			Mess c = agencyTest.getMesses().get(serviceSelect);
+			PackageService newPackage = new PackageService();
+			newPackage.addService(c);
+			agencyTest.getPackages().add(newPackage);
+			finishCreate();
+		}
+	}
+	
+	public void addActivityPackageFinally() {
+		int serviceSelect = viewTest.getPanelWindow().activitySelectAdmin();
+		if(serviceSelect == -1) noSelect();
+		else {
+			Activity c = agencyTest.getActivities().get(serviceSelect);
+			PackageService newPackage = new PackageService();
+			newPackage.addService(c);
+			agencyTest.getPackages().add(newPackage);
+			finishCreate();
+		}
+	}
+	
+	public void finishCreate() {
+		viewTest.getPanelWindow().showDatesAdministrator(agencyTest.getFlights(), agencyTest.getHouses(), 
+				agencyTest.getCars(), agencyTest.getMesses(), agencyTest.getActivities(), 
+				agencyTest.getPackages(), this);
+		changePanelCenter("packages");
+		viewTest.getPanelWindow().message("Acción Exitosa");
 	}
 	
 	public void mouseEntered(MouseEvent e) {

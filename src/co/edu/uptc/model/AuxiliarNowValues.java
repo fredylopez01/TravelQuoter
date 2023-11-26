@@ -10,6 +10,7 @@ public class AuxiliarNowValues {
 	private int carEdditing;
 	private int messEdditing;
 	private int activityEddint;
+	private String typeServiceAdd;
 
 	public ArrayList<PackageService> getNowPackages() {
 		return nowPackages;
@@ -65,6 +66,14 @@ public class AuxiliarNowValues {
 
 	public void setActivityEddint(int activityEddint) {
 		this.activityEddint = activityEddint;
+	}
+
+	public String getTypeServiceAdd() {
+		return typeServiceAdd;
+	}
+
+	public void setTypeServiceAdd(String typeServiceAdd) {
+		this.typeServiceAdd = typeServiceAdd;
 	}
 	
 }

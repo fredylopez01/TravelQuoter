@@ -51,14 +51,12 @@ public class MainPanel extends JPanel {
 		jdMessage = new JDMessage(listener, father);
 	}
 	
-	public void changeProfile(JFrame father) {
-//		father.setVisible(false);
+	public void changeProfile() {
 		jd.setVisible(true);
 	}
 	
-	public void closeChoseProfile(JFrame father) {
+	public void closeChoseProfile() {
 		jd.dispose();
-//		father.setVisible(true);
 	}
 	
 	public void panelUser() {
@@ -348,6 +346,14 @@ public class MainPanel extends JPanel {
 	
 	public void addActivityTable(String[] f) {
 		body.getPanelCenter().addActivityTable(f);
+	}
+	
+	public void btnAddServicePackage() {
+		body.btnAddServicePackage();
+	}
+	
+	public void noBtnAddServicePackage() {
+		body.noBtnAddServicePackage();
 	}
 
 	public JDVerifyIdentity getJdPassword() {

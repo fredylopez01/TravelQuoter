@@ -51,12 +51,32 @@ public class Agency {
 		return flightsResult;
 	}
 	
+	public ArrayList<Flight> searchFlightTwo(String startingPlace, String place){
+		ArrayList<Flight> flightsResult = new ArrayList<>();
+		for(Flight f: flights) {
+			if(f.getStartingPlace().equals(startingPlace) && f.getPlace().equals(place)) {
+				flightsResult.add(f);
+			}
+		}
+		return flightsResult;
+	}
+	
 	public ArrayList<HouseRental> searchHouseRental(ArrayList<Service> housesP, int numberRooms, int numberBathrooms, int sizeMeters){
 		ArrayList<HouseRental> housesResult = new ArrayList<>();
 		for(Service i: housesP) {
 			HouseRental h =  (HouseRental) i;
 			if (h.getNumberRooms() == numberRooms && h.getNumberBathrooms() == numberBathrooms 
 					&& h.getSizeMeters() == sizeMeters) {
+				housesResult.add(h);
+			}
+		}
+		return housesResult;
+	}
+	
+	public ArrayList<HouseRental> searchHouseRental(int numberRooms, String place){
+		ArrayList<HouseRental> housesResult = new ArrayList<>();
+		for(HouseRental h: houses) {
+			if (h.getNumberRooms() == numberRooms && h.getPlace().equals(place)) {
 				housesResult.add(h);
 			}
 		}
@@ -74,11 +94,31 @@ public class Agency {
 		return carsResult;
 	}
 	
+	public ArrayList<CarRental> searchCarRental(String brand, String place){
+		ArrayList<CarRental> carsResult = new ArrayList<>();
+		for(CarRental c: cars) {
+			if (c.getBrand().equals(brand) && c.getPlace().equals(place)) {
+				carsResult.add(c);
+			}
+		}
+		return carsResult;
+	}
+	
 	public ArrayList<Mess> searchMess(ArrayList<Service> messesP, int sizeKg, String startingPlace){
 		ArrayList<Mess> messesResult = new ArrayList<>();
 		for(Service i: messesP) {
 			Mess m =  (Mess) i;
 			if (m.getSizeKg() == sizeKg && m.getStartingPlace().equals(startingPlace)) {
+				messesResult.add(m);
+			}
+		}
+		return messesResult;
+	}
+	
+	public ArrayList<Mess> searchMess(String place, String startingPlace){
+		ArrayList<Mess> messesResult = new ArrayList<>();
+		for(Mess m: messes) {
+			if(m.getPlace().equals(place) && m.getStartingPlace().equals(startingPlace)) {
 				messesResult.add(m);
 			}
 		}
@@ -96,16 +136,36 @@ public class Agency {
 		return activitiesResult;
 	}
 	
-	public ArrayList<PackageService> searchPackage(double price, int numberServices, String place){
-		ArrayList<PackageService> activitiesResult = new ArrayList<>();
-		for(PackageService i: packages) {
-			if (i.getNumberServices() == numberServices && place.equals(i.getPlace())) {
-				if(i.getCost() > (price-50000) && i.getCost() < (price+50000)) {
-					activitiesResult.add(i);
-				}
+	public ArrayList<Activity> searchActivities(String place){
+		ArrayList<Activity> activitiesResult = new ArrayList<>();
+		for(Activity a: activities) {
+			if (a.getPlace().equals(place)) {
+				activitiesResult.add(a);
 			}
 		}
 		return activitiesResult;
+	}
+	
+	public ArrayList<PackageService> searchPackage(double price, int numberServices, String place){
+		ArrayList<PackageService> packagesResult = new ArrayList<>();
+		for(PackageService i: packages) {
+			if (i.getNumberServices() == numberServices && place.equals(i.getPlace())) {
+				if(i.getCost() > (price-50000) && i.getCost() < (price+50000)) {
+					packagesResult.add(i);
+				}
+			}
+		}
+		return packagesResult;
+	}
+	
+	public ArrayList<PackageService> searchPackage(String place){
+		ArrayList<PackageService> packagesResult = new ArrayList<>();
+		for(PackageService i: packages) {
+			if (i.getPlace().equals(place)) {
+					packagesResult.add(i);
+				}
+		}
+		return packagesResult;
 	}
 	
 	public String[] placesFlight() {

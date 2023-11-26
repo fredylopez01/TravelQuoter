@@ -24,6 +24,14 @@ public class PanelMaxCenterAdmin extends JPanel {
 		options = new OptionsAdmin(listener);
 		add(options, BorderLayout.SOUTH);
 	}
+	
+	public void btnAddServicePackage() {
+		options.btnAddService();
+	}
+	
+	public void noBtnAddServicePackage() {
+		options.btnAddServiceNo();
+	}
 
 	public PanelCenterAdmin getPanelC() {
 		return panelC;

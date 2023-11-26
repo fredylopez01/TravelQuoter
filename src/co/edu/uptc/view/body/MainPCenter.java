@@ -45,6 +45,7 @@ public class MainPCenter extends JPanel {
 			layoutUser.show(panelUser, "panelSearch");
 		} else {
 			panelAdminist.getPanelC().changePanelResponse(panel);
+			panelAdminist.noBtnAddServicePackage();
 			layoutAdminist.show(panelAdminist.getPanelC(), "panelResponse");
 		}
 	}
@@ -321,7 +322,7 @@ public class MainPCenter extends JPanel {
 		DefaultTableModel model = (DefaultTableModel) panelAdminist.getPanelC().getPanelResponse().getResponseActivity().getResults().getModel();
 		model.addRow(activity);
 	}
-
+	
 	public PanelCenterUser getPanelCenterUser() {
 		return panelUser;
 	}
@@ -337,5 +338,12 @@ public class MainPCenter extends JPanel {
 	public void setPanelCAdminist(PanelCenterAdmin panelCAdminist) {
 		this.panelAdminist.setPanelC(panelCAdminist);
 	}
-	
+
+	public PanelMaxCenterAdmin getPanelAdminist() {
+		return panelAdminist;
+	}
+
+	public void setPanelAdminist(PanelMaxCenterAdmin panelAdminist) {
+		this.panelAdminist = panelAdminist;
+	}
 }

@@ -48,6 +48,14 @@ public class Body extends JPanel {
 		cPanelCenter.show(panelCenter, "panelUser");
 	}
 	
+	public void btnAddServicePackage() {
+		panelCenter.getPanelAdminist().btnAddServicePackage();
+	}
+	
+	public void noBtnAddServicePackage() {
+		panelCenter.getPanelAdminist().noBtnAddServicePackage();
+	}
+	
 	public Nav getNav() {
 		return nav;
 	}

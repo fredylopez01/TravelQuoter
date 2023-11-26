@@ -20,6 +20,7 @@ public class PanelResponseShowPackage extends PanelResponse {
 	}
 	
 	public void showPackage(PackageService packageSelect) {
+		this.removeAll();
 		this.packageSelected =  packageSelect;
 		addComponents();
 	}
