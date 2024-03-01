@@ -21,7 +21,7 @@ public class PanelNoResults extends JPanel {
 	private ImageIcon noResults;
 	
 	public PanelNoResults(ActionListener listener) {
-		setBackground(Color.DARK_GRAY);
+		setBackground(Constants.COLORBACKGROUNDPANEL);
 		initComponents(listener);
 	}
 
@@ -31,7 +31,6 @@ public class PanelNoResults extends JPanel {
 		iconBack = new ImageIcon(getClass().getResource("/co/edu/uptc/view/images/header/back.png"));
 		back = new JButton();
 		back.setIcon(iconBack);
-		back.setBorderPainted(false);
 		back.setContentAreaFilled(false);
 		back.setCursor(Constants.HANDCURSOR);
 		back.setActionCommand("back");
@@ -41,13 +40,13 @@ public class PanelNoResults extends JPanel {
 		add(back, gbc);
 		
 		noResults = new ImageIcon(getClass().getResource("/co/edu/uptc/view/images/header/noResults.png"));
-		message = new JLabel("0 COINCIDENCIAS");
+		message = new JLabel("SIN COINCIDENCIAS");
 		message.setIcon(noResults);
 		message.setFont(Constants.FONTNORESULTS);
 		message.setForeground(Color.RED);
 		gbc.gridx = 1;
 		gbc.gridy = 1;
-		gbc.insets = new Insets(10, 5, 30, 85);
+		gbc.insets = new Insets(10, 5, 30, 60);
 		add(message, gbc);
 	}
 }
